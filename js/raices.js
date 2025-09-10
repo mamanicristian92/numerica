@@ -1,20 +1,48 @@
-var maxIter=100; // Valor por defecto
+const maxIter=20; // Valor por defecto
+const cabeceraCerrados=["Iter.","a","b","c","f(a)","f(b)","f(c)"];
+const cabeceraAbiertos=["Iter.","x0","x1","x2","f(x0)","f(x1)","f(x2)"];
+class TablaHtml {
+    constructor(tablahtml) {
+        console.log(tablahtml);
+        this.tablahtml=tablahtml;
+        this.body=tablahtml.getElementsByTagName('tbody');
+    }
+    vaciar() {
+        this.tablahtml.innerHTML="";
+    } // fin vaciar
+    agregarCabecera(cabecera) {
+        let line="<thead><tr>";
+        cabecera.forEach(elemento => {
+            line+=`<th>${elemento}</th>`;
+        });
+        line+='</tr></thead>';
+        this.tablahtml.innerHTML+=line;
+        this.iniciarCuerpo();
+    } // fin iniciarCabecera
+    iniciarCuerpo() {
+        this.body=document.createElement('tbody');
+        this.tablahtml.appendChild(this.body);
+    } // fin iniciarCuerpo
+    agregarFila(fila) {
+        let line="<tr>";
+        fila.forEach(elemento => {
+            line+=`<td>${elemento}</td>`;
+        });
+        line+=`</tr>`;
+        this.body.insertAdjacentHTML('beforeend', line);
+    } // fin agregarFila
+}
 document.getElementById('formRaices').addEventListener('submit', function(event) {
             event.preventDefault(); // Evita el envío del formulario
             const funcionStr = document.getElementById('funcion').value;
             const a = parseFloat(document.getElementById('a').value);
             const b = parseFloat(document.getElementById('b').value);
             const error = parseFloat(document.getElementById('error').value);
-            const tablaResultados1 = document.getElementById('tablaResultados1');
-            const tablaResultados2 = document.getElementById('tablaResultados2');
-            const tablaResultados3 = document.getElementById('tablaResultados3');
+            let tablaResultados1 = new TablaHtml(document.getElementById('tablaResultados1'));
+            let tablaResultados2 = new TablaHtml(document.getElementById('tablaResultados2'));
+            let tablaResultados3 = new TablaHtml(document.getElementById('tablaResultados3'));
             //const maxIter = parseInt(document.getElementById('maxIter').value);
             //const maxIter = 100; // Valor por defecto
-            // Aquí puedes agregar la lógica para procesar los datos del formulario
-            // Por ejemplo, podrías llamar a una función que realice el método de bisección
-            // y mostrar el resultado en la página
-            // Ejemplo: document.getElementById('resultado').innerText = `Función: ${funcionStr}, a: ${a}, b: ${b}, Tolerancia: ${tolerancia}, Máximo Iteraciones: ${maxIter}`;
-            // Función para evaluar la función ingresada por el usuario
             function evaluarFuncion(x) {
                 var x=x;
                 return eval(funcionStr);
@@ -36,12 +64,8 @@ document.getElementById('biseccion').addEventListener('click', function() {
     }
 });
 document.getElementById('regulafalsi').addEventListener('click', function() {
-    if (this.checked) {
-        document.getElementById('rf_result').style.display = 'block';
-    }
-    else {
-        document.getElementById('rf_result').style.display = 'none';
-    }
+    const style_display = this.checked?'block':'none';
+    document.getElementById('rf_result').style.display = style_display;
 });
 document.getElementById('regulafalsimodificada').addEventListener('click', function() {
     if (this.checked) {
@@ -55,13 +79,14 @@ const fun =function(x) {
     return Math.exp(x)-(x*x)+1;
 }
 const biseccion= function(f,a,b,e,tablaResultados) {
+    tablaResultados.vaciar();
     if (f(a)*f(b)>0) {
         return "No se cumple el teorema de Bolzano";
     }
-    tablaResultados.innerHTML=`<tr><th>Iter.</th><th>a</th><th>b</th><th>c</th><th>f(a)</th><th>f(b)</th><th>f(c)</th></tr>`;
+    tablaResultados.agregarCabecera(cabeceraCerrados);
     let i=0;
     let c=(a+b)/2;
-    tablaResultados.innerHTML += `<tr><td>${i}</td><td>${a}</td><td>${b}</td><td>${c}</td><td>${f(a)}</td><td>${f(b)}</td><td>${f(c)}</td></tr>`;
+    tablaResultados.agregarFila([i,a,b,c,f(a),f(b),f(c)]);
     while (Math.abs(f(c))>e) {
         if (f(a)*f(c)<0) {
             b=c;
@@ -70,22 +95,23 @@ const biseccion= function(f,a,b,e,tablaResultados) {
         }
         c=(a+b)/2;
         i++;
-        //console.log(`Iteracion ${i}: a=${a}, b=${b}, c=${c}, f(c)=${f(c)}`);
-        tablaResultados.innerHTML += `<tr><td>${i}</td><td>${a}</td><td>${b}</td><td>${c}</td><td>${f(a)}</td><td>${f(b)}</td><td>${f(c)}</td></tr>`;
+        tablaResultados.agregarFila([i,a,b,c,f(a),f(b),f(c)]);
         if (i>maxIter) {
             return "No converge";
         }
     }
+    //tablaResultados.finalizarCuerpo();
     return c;
 }
 const rf=function(f,a,b,e,tablaResultados) {
     if (f(a)*f(b)>0) {
         return "No se cumple el teorema de Bolzano";
     }
+    tablaResultados.vaciar();
     let i=0;
     let c=b-((f(b)*(a-b))/(f(a)-f(b)));
-    tablaResultados.innerHTML=`<tr><th>Iter.</th><th>a</th><th>b</th><th>c</th><th>f(a)</th><th>f(b)</th><th>f(c)</th></tr>`;
-    tablaResultados.innerHTML += `<tr><td>${i}</td><td>${a}</td><td>${b}</td><td>${c}</td><td>${f(a)}</td><td>${f(b)}</td><td>${f(c)}</td></tr>`;
+    tablaResultados.agregarCabecera(cabeceraCerrados);
+    tablaResultados.agregarFila([i,a,b,c,f(a),f(b),f(c)]);
     while (Math.abs(f(c))>e) {
         if (f(a)*f(c)<0) {
             b=c;
@@ -94,8 +120,7 @@ const rf=function(f,a,b,e,tablaResultados) {
         }
         c=b-((f(b)*(a-b))/(f(a)-f(b)));
         i++;
-        console.log(`Iteracion ${i}: a=${a}, b=${b}, c=${c}, f(c)=${f(c)}`);
-        tablaResultados.innerHTML += `<tr><td>${i}</td><td>${a}</td><td>${b}</td><td>${c}</td><td>${f(a)}</td><td>${f(b)}</td><td>${f(c)}</td></tr>`;
+        tablaResultados.agregarFila([i,a,b,c,f(a),f(b),f(c)]);
         if (i>maxIter) {
             return "No converge";
         }
@@ -104,6 +129,7 @@ const rf=function(f,a,b,e,tablaResultados) {
 }
 
 const rfm=function(f,a,b,e,tablaResultados) {
+    tablaResultados.innerHTML="";
     if (f(a)*f(b)>0) {
         return "No se cumple el teorema de Bolzano";
     }

@@ -9,7 +9,8 @@
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
     
     <title>Prgramación Numérica</title>
@@ -30,15 +31,13 @@
         <br>
         <label for="a">a:</label>
         <input type="text" id="a" name="a" step="any" inputmode="numeric" autocomplete="off" value="-2" required>
-        <br><br>
+        <br>
         <label for="b">b:</label>
         <input type="text" id="b" name="b" step="any" inputmode="numeric" autocomplete="off" value="-1" required>
-        <br><br>
+        <br>
         <label for="error">Error:</label>
         <input type="number" id="error" name="error" step="any" value="0.0001" autocomplete="off" required>
-        <br><br>
-        <!-- <label for="maxIter">Máximo de Iteraciones:</label>
-        <input type="number" id="maxIter" name="maxIter" value="100" required> -->
+        <br>
         <h5>Seleccione el/los método/s a utilizar:</h5>
         <input type="checkbox" id="biseccion" name="biseccion" checked>
         <label for="biseccion">Biseeción:</label>
@@ -53,27 +52,31 @@
         <button type="submit">Calcular Raíz</button>
     </form>
     <div id="bis_result">
-        <h5>Biseeción<h5>
+        <h5>Biseeción</h5>
         <div style="overflow-x:scroll; max-width: 100%;">
             <table id="tablaResultados1">
                 <!-- Los resultados se agregarán aquí dinámicamente -->
             </table>
         </div>
-        <p id="resultado1"></p>
+        <div id="resultado1"></div>
     </div>
-    <div id="rf_result" style="overflow-x:scroll; max-width: 100%;">
-        <h5>Regula Falsi<h5>
-        <table id="tablaResultados2">
-            <!-- Los resultados se agregarán aquí dinámicamente -->
-        </table>
-        <h5 id="resultado2"></h5>
+    <div id="rf_result">
+        <h5>Regula Falsi</h5>
+        <div style="overflow-x:scroll; max-width: 100%;">
+            <table id="tablaResultados2">
+                <!-- Los resultados se agregarán aquí dinámicamente -->
+            </table>
+        </div>
+        <div id="resultado2"></div>
     </div>
-    <div id="rfm_result" style="overflow-x:scroll; max-width: 100%;">
-        <h5>Regula Falsi Modificada<h5>
-        <table id="tablaResultados3">
-            <!-- Los resultados se agregarán aquí dinámicamente -->
-        </table>
-        <h5 id="resultado3"></h5>
+    <div id="rfm_result">
+        <h5>Regula Falsi Modificada</h5>
+        <div style="overflow-x:scroll; max-width: 100%;">
+            <table id="tablaResultados3">
+                <!-- Los resultados se agregarán aquí dinámicamente -->
+            </table>
+        </div>
+        <div id="resultado3"></div>
     </div>
     <script src="js/raices.js"></script>
 </body>
