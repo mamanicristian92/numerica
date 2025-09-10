@@ -5,29 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- css -->
-    <link rel="stylesheet" href="css/index.css" deefer>
+    
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="css/index.css" deefer>
     
     <title>Prgramación Numérica</title>
 </head>
 <body>
-    <h1>Resolución de Ecuaciones no lineales</h1>
-    <h2>Métodos Cerrados</h2>
+    <h2>Resolución de Ecuaciones no lineales</h2>
+    <h3>Métodos Cerrados</h3>
     <form id="formRaices">
         <label for="funcion">Función f(x):</label>
         <input type="text" id="funcion" name="funcion" placeholder="Math.exp(x)-x**2+1" autocomplete="off" value="Math.exp(x)-x**2+1" required>
         <br>
-        <p style="font-size: small; color: #555">
+        <p style="font-size: small; color: #555; padding-left: 6px;">
             Nota: Utilizar 'Math' para funciones matemáticas (ej. Math.sin(x), Math.log(x), Math.exp(x), etc.)
             <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math" target="_blank">Ver funciones Math</a>
             <br>
             Usar '**' para potencias (ej. x**2 para x al cuadrado)<br>
         </p>
-        <br>
         <label for="a">a:</label>
         <input type="text" id="a" name="a" step="any" inputmode="numeric" autocomplete="off" value="-2" required>
         <br>
